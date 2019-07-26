@@ -1,7 +1,8 @@
 from maze_generator.Maze.cell import Cell
 from maze_generator.Maze.coordinate import Coordinate
 from maze_generator.Maze.direction_type import DirectionType
-from numpy import matrix
+from numpy import ndarray
+from typing import Optional
 
 
 # ------------------------------------------------------------------------------
@@ -29,7 +30,7 @@ class Maze:
     def __init__(self, width: int, height: int):
         self._width = width
         self._height = height
-        self._grid = self.create_maze_grid()
+        self._grid = ndarray(self.create_maze_grid())
 
     # --------------------------------------------------------------------------
     # Create the grid for the futur maze
@@ -44,7 +45,22 @@ class Maze:
             maze.append(maze_line)
         return maze
 
-    def cellAt(self, cell: Cell, direction: DirectionType) -> Cell:
+    def open_wall(self, cell: Cell, direction: DirectionType) -> bool:
+        """
+        Open a wall between two cells
+        """
+        neighbour = self.__get_cell_neighbour(cell, direction)
+        if neighbour is None:
+            return False
+        cell.open_wall(direction)
+        neighbour.open_wall(direction.opposite())
+        return True
+
+    def __get_cell_neighbour(self, cell: Cell, direction: DirectionType) -> \
+            Optional[Cell]:
+        """
+        Get the cell's neighbour in the given direction
+        """
         coordinate = cell.coordinate
         if direction == DirectionType.NORTH:
             coordinate.y -= 1
@@ -52,13 +68,17 @@ class Maze:
             coordinate.y += 1
         elif direction == DirectionType.EAST:
             coordinate.x += 1
-        elif direction == DirectionType.WEST
-            coordinate -= 1
-        else
+        elif direction == DirectionType.WEST:
+            coordinate.x -= 1
+        else:
             raise ValueError("Unknown enum value")
+        return self.__get_cell(coordinate)
 
-        if coordinate.x < 0
-
-
-    def open_wall(self, cell: Cell, direction: DirectionType):
-        print("open wall")
+    def __get_cell(self, coordinate: Coordinate) -> Optional[Cell]:
+        """
+        Get the cell at the given coordinate
+        """
+        if coordinate.isValid(self._width, self._height):
+            return self._grid[coordinate.y][coordinate.x]
+        else:
+            return None

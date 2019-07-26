@@ -20,7 +20,7 @@ class Coordinate:
     def y(self) -> int:
         return self._y
 
-    @x.setter
+    @y.setter
     def y(self, new_y: int):
         self._y = new_y
 
