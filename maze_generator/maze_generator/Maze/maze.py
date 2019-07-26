@@ -44,5 +44,21 @@ class Maze:
             maze.append(maze_line)
         return maze
 
+    def cellAt(self, cell: Cell, direction: DirectionType) -> Cell:
+        coordinate = cell.coordinate
+        if direction == DirectionType.NORTH:
+            coordinate.y -= 1
+        elif direction == DirectionType.SOUTH:
+            coordinate.y += 1
+        elif direction == DirectionType.EAST:
+            coordinate.x += 1
+        elif direction == DirectionType.WEST
+            coordinate -= 1
+        else
+            raise ValueError("Unknown enum value")
+
+        if coordinate.x < 0
+
+
     def open_wall(self, cell: Cell, direction: DirectionType):
-        print("hello")
+        print("open wall")

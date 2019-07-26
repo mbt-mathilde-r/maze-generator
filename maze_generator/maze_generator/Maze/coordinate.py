@@ -23,3 +23,7 @@ class Coordinate:
     def __init__(self, x: int, y: int):
         self._x = x
         self._y = y
+
+    def isValid(self, maxX: int, maxY: int) -> bool:
+        return 0 <= self._x < maxX \
+               and 0 <= self._y < maxY
