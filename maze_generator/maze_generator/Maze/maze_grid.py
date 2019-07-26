@@ -31,7 +31,7 @@ class MazeGrid:
     def __init__(self, width: int, height: int):
         self._width = width
         self._height = height
-        self._grid = ndarray(self.create_grid())
+        self._grid = self.create_grid()
 
     def create_grid(self) -> [[Cell]]:
         """
