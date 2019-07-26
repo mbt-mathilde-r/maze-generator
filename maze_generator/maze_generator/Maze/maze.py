@@ -78,7 +78,7 @@ class Maze:
         """
         Get the cell at the given coordinate
         """
-        if coordinate.isValid(self._width, self._height):
+        if coordinate.is_valid(self._width, self._height):
             return self._grid[coordinate.y][coordinate.x]
         else:
             return None

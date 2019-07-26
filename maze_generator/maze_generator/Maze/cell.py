@@ -13,42 +13,30 @@ class Cell:
     # --------------------------------------------------------------------------
 
     @property
-    def is_visited(self) -> bool:
-        return self._isVisited
-
-    @is_visited.setter
-    def is_visited(self, is_visited: bool):
-        self._isVisited = is_visited
-
-    @property
     def coordinate(self) -> Coordinate:
-        return self._coordinate
+        return self.__coordinate
 
     @property
     def is_closed(self) -> bool:
-        return all(self._walls.values())
+        return all(self.__walls.values())
 
     # --------------------------------------------------------------------------
     # Initialization
     # --------------------------------------------------------------------------
 
     def __init__(self, coordinate: Coordinate):
-        self._isVisited = False
-        self._coordinate = coordinate
-        self._walls = {
+        self.isVisited = False
+        self.__coordinate = coordinate
+        self.__walls = {
             DirectionType.NORTH: True,
             DirectionType.EAST: True,
             DirectionType.SOUTH: True,
             DirectionType.WEST: True
         }
 
-        cellPosition = self.coordinate
-        cellPosition.x += 1
-        return cellPosition
-
     # --------------------------------------------------------------------------
     # Walls
     # --------------------------------------------------------------------------
 
     def open_wall(self, direction: DirectionType):
-        self._walls[direction] = False
+        self.__walls[direction] = False
