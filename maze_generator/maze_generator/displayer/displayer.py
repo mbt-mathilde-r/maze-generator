@@ -14,7 +14,7 @@ class Displayer:
     def __display_as_ascii(maze: Maze):
         height = maze.height
         width = maze.width
-        rows = ['-' * width * height]
+        rows = [' ' + '_ ' * width]
 
         for y in range(height):
             row = ['|']

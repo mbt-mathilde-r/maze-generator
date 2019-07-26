@@ -41,4 +41,4 @@ class Cell:
         return all(self.__walls.values())
 
     def is_direction_open(self, direction: DirectionType) -> bool:
-        return self.__walls[direction]
+        return not self.__walls[direction]
