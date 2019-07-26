@@ -13,6 +13,5 @@ class MainMazeGenerator:
         print("Todo")
 
     if __name__ == '__main__':
-        print("Hello")
         maze = Maze(5, 5)
         Displayer.display(maze, DisplayType.ASCII)
