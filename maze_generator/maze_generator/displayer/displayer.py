@@ -32,4 +32,5 @@ class Displayer:
                 else:
                     row.append('  +')
             rows.append(''.join(row))
-        return '\n'.join(rows)
+        result = '\n'.join(rows)
+        print(result)
