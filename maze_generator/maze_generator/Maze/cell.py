@@ -16,10 +16,6 @@ class Cell:
     def coordinate(self) -> Coordinate:
         return self.__coordinate
 
-    @property
-    def is_closed(self) -> bool:
-        return all(self.__walls.values())
-
     # --------------------------------------------------------------------------
     # Initialization
     # --------------------------------------------------------------------------
@@ -40,3 +36,9 @@ class Cell:
 
     def open_wall(self, direction: DirectionType):
         self.__walls[direction] = False
+
+    def is_closed(self) -> bool:
+        return all(self.__walls.values())
+
+    def is_direction_open(self, direction: DirectionType) -> bool:
+        return self.__walls[direction]
