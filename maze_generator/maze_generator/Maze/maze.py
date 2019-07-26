@@ -1,8 +1,6 @@
 from maze_generator.Maze.cell import Cell
-from maze_generator.Maze.coordinate import Coordinate
+from maze_generator.Maze.maze_grid import MazeGrid
 from maze_generator.Maze.direction_type import DirectionType
-from numpy import ndarray
-from typing import Optional
 
 
 # ------------------------------------------------------------------------------
@@ -17,68 +15,46 @@ class Maze:
 
     @property
     def width(self) -> int:
-        return self._width
+        return self._grid.width
 
     @property
     def height(self) -> int:
-        return self._height
+        return self._grid.height
+
+    def __getitem__(self, key: int) -> [Cell]:
+        return self._grid[key]
 
     # --------------------------------------------------------------------------
     # Initialize
     # --------------------------------------------------------------------------
 
     def __init__(self, width: int, height: int):
-        self._width = width
-        self._height = height
-        self._grid = ndarray(self.create_maze_grid())
+        self._grid = MazeGrid(width, height)
 
     # --------------------------------------------------------------------------
-    # Create the grid for the futur maze
+    # Create Maze
     # --------------------------------------------------------------------------
 
-    def create_maze_grid(self) -> [[Cell]]:
-        maze = []
-        for y in range(self._height):
-            maze_line = []
-            for x in range(self._width):
-                maze_line.append(Cell(Coordinate(x, y)))
-            maze.append(maze_line)
-        return maze
+    def build_maze(self):
+        print("build maze")
+
+    def iterate_neighbour_opening_walls(self, cell):
+        neighbour = self._grid.get_random_unvisited_neighbour(cell)
+        if neighbour is None:
+            return
+
+    # --------------------------------------------------------------------------
+    # Maze walls
+    # --------------------------------------------------------------------------
 
     def open_wall(self, cell: Cell, direction: DirectionType) -> bool:
         """
         Open a wall between two cells
         """
-        neighbour = self.__get_cell_neighbour(cell, direction)
+        neighbour = self._grid.get_cell_neighbour(cell, direction)
         if neighbour is None:
             return False
         cell.open_wall(direction)
         neighbour.open_wall(direction.opposite())
         return True
 
-    def __get_cell_neighbour(self, cell: Cell, direction: DirectionType) -> \
-            Optional[Cell]:
-        """
-        Get the cell's neighbour in the given direction
-        """
-        coordinate = cell.coordinate
-        if direction == DirectionType.NORTH:
-            coordinate.y -= 1
-        elif direction == DirectionType.SOUTH:
-            coordinate.y += 1
-        elif direction == DirectionType.EAST:
-            coordinate.x += 1
-        elif direction == DirectionType.WEST:
-            coordinate.x -= 1
-        else:
-            raise ValueError("Unknown enum value")
-        return self.__get_cell(coordinate)
-
-    def __get_cell(self, coordinate: Coordinate) -> Optional[Cell]:
-        """
-        Get the cell at the given coordinate
-        """
-        if coordinate.is_valid(self._width, self._height):
-            return self._grid[coordinate.y][coordinate.x]
-        else:
-            return None

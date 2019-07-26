@@ -1,4 +1,5 @@
 from enum import Enum
+from random import Random
 
 
 class DirectionType(Enum):
@@ -26,3 +27,14 @@ class DirectionType(Enum):
         elif self == DirectionType.EAST:
             return DirectionType.WEST
         raise ValueError("Unknown enum value")
+
+    @staticmethod
+    def all():
+        return [DirectionType.NORTH,
+                DirectionType.SOUTH,
+                DirectionType.EAST,
+                DirectionType.WEST]
+
+    @staticmethod
+    def random():
+        return Random.choice(DirectionType.all())
