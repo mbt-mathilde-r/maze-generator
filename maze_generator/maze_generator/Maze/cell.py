@@ -16,7 +16,7 @@ class Cell:
     def is_visited(self) -> bool:
         return self._isVisited
 
-    @gain.isVisited
+    @is_visited.setter
     def is_visited(self, is_visited: bool):
         self._isVisited = is_visited
 
@@ -41,6 +41,10 @@ class Cell:
             DirectionType.SOUTH: True,
             DirectionType.WEST: True
         }
+
+        cellPosition = self.coordinate
+        cellPosition.x += 1
+        return cellPosition
 
     # --------------------------------------------------------------------------
     # Walls
