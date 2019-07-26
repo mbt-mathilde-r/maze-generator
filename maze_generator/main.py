@@ -12,9 +12,7 @@ class MainMazeGenerator:
     def __init__(self):
         print("Todo")
 
-    def main(self):
-        print("Todo")
-
     if __name__ == '__main__':
-        maze = Maze(10, 10)
+        print("Hello")
+        maze = Maze(5, 5)
         Displayer.display(maze, DisplayType.ASCII)
