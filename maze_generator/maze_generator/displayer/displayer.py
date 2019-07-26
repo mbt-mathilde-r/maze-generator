@@ -20,17 +20,21 @@ class Displayer:
             row = ['|']
             for x in range(width):
                 if maze[x][y].is_direction_open(DirectionType.EAST):
-                    row.append(' |')
-                else:
                     row.append('  ')
+                else:
+                    row.append(' |')
             rows.append(''.join(row))
 
             row = ['|']
             for x in range(width):
                 if maze[x][y].is_direction_open(DirectionType.SOUTH):
-                    row.append('-+')
+                    row.append(' +')
                 else:
-                    row.append('  +')
+                    row.append('-+')
+            rowLength = len(row)
+            row[rowLength-1] = '-|'
             rows.append(''.join(row))
+        rowsLength = len(rows)
+        rows[rowsLength - 1] = ''.join([' ' + '- ' * width])
         result = '\n'.join(rows)
         print(result)
