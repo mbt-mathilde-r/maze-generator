@@ -1,6 +1,7 @@
 from maze_generator.Maze.cell import Cell
 from maze_generator.Maze.coordinate import Coordinate
 from maze_generator.Maze.direction_type import DirectionType
+from maze_generator.Maze.neighbour import Neighbour
 from numpy import ndarray
 from typing import Optional
 from random import Random
@@ -44,8 +45,7 @@ class MazeGrid:
             maze.append(maze_line)
         return maze
 
-    def get_random_unvisited_neighbour(self, cell) -> \
-            Optional[{DirectionType: Cell}]:
+    def get_random_unvisited_neighbour(self, cell) -> Optional[Neighbour]:
         """
         Get a random unvisited neighbour cell or None if the cell as no
         unvisited neighbour
@@ -55,14 +55,14 @@ class MazeGrid:
             return None
         return Random.choice(unvisited_neighbours)
 
-    def get_unvisited_neighbours(self, cell) -> [{DirectionType: Cell}]:
+    def get_unvisited_neighbours(self, cell) -> [Neighbour]:
         """
         Get the list of unvisited neighbours of the cell
         """
         unvisited_neighbours = []
         for direction in DirectionType.all():
             if cell.is_direction_open(direction):
-                unvisited_neighbours.append({direction: cell})
+                unvisited_neighbours.append(Neighbour(direction, cell))
         return unvisited_neighbours
 
     def get_cell_neighbour(self, cell: Cell,

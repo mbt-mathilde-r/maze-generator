@@ -1,4 +1,5 @@
 from maze_generator.Maze.cell import Cell
+from maze_generator.Maze.coordinate import Coordinate
 from maze_generator.Maze.maze_grid import MazeGrid
 from maze_generator.Maze.direction_type import DirectionType
 
@@ -36,12 +37,16 @@ class Maze:
     # --------------------------------------------------------------------------
 
     def build_maze(self):
-        print("build maze")
+        self.iterate_neighbour_opening_walls(self._grid.get_cell(Coordinate(
+            0, 0)))
 
-    def iterate_neighbour_opening_walls(self, cell):
+    def iterate_neighbour_opening_walls(self, cell: Cell):
+        cell.isVisited = True
         neighbour = self._grid.get_random_unvisited_neighbour(cell)
         if neighbour is None:
             return
+        cell.open_wall(neighbour.direction)
+        self.iterate_neighbour_opening_walls(neighbour.cell)
 
     # --------------------------------------------------------------------------
     # Maze walls
