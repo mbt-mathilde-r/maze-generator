@@ -65,8 +65,8 @@ class MazeGrid:
                 unvisited_neighbours.append({direction: cell})
         return unvisited_neighbours
 
-    def get_cell_neighbour(self, cell: Cell, direction: DirectionType) -> \
-            Optional[Cell]:
+    def get_cell_neighbour(self, cell: Cell,
+                           direction: DirectionType) -> Optional[Cell]:
         """
         Get the cell's neighbour in the given direction
         """
