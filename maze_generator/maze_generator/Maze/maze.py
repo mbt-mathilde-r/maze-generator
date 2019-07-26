@@ -42,10 +42,14 @@ class Maze:
             0, 0)))
 
     def iterate_neighbour_opening_walls(self, cell: Cell):
+        if cell is None:
+            return
         cell.isVisited = True
         neighbour = self._grid.get_random_unvisited_neighbour(cell)
         if neighbour is None:
             return
+        print("unvisited neighbour")
+        print(neighbour.cell.coordinate.__str__())
         cell.open_wall(neighbour.direction)
         self.iterate_neighbour_opening_walls(neighbour.cell)
 
