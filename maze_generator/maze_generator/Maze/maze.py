@@ -56,8 +56,9 @@ class Maze:
         neighbour.open_wall(direction.opposite())
         return True
 
-    def __get_cell_neighbour(self, cell: Cell, direction: DirectionType) -> \
-            Optional[Cell]:
+    def __get_cell_neighbour(self,
+                             cell: Cell,
+                             direction: DirectionType) -> Optional[Cell]:
         """
         Get the cell's neighbour in the given direction
         """
