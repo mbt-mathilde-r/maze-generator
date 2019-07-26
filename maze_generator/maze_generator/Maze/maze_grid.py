@@ -53,7 +53,7 @@ class MazeGrid:
         unvisited_neighbours = self.get_unvisited_neighbours(cell)
         if unvisited_neighbours.__len__() == 0:
             return None
-        return Random.choice(unvisited_neighbours)
+        return Random().choice(unvisited_neighbours)
 
     def get_unvisited_neighbours(self, cell) -> [Neighbour]:
         """
@@ -61,11 +61,17 @@ class MazeGrid:
         """
         unvisited_neighbours = []
         for direction in DirectionType.all():
-            if cell.is_direction_open(direction):
-                unvisited_neighbours.append(Neighbour(direction, cell))
+            print("direction " + direction.__str__())
+            neighbour = self.get_cell_neighbour(cell, direction)
+            if neighbour is not None:
+                if not neighbour.isVisited:
+                    print("unvisited neoghbour")
+                    print(neighbour.coordinate.__str__())
+                    unvisited_neighbours.append(Neighbour(direction, neighbour))
         return unvisited_neighbours
 
-    def get_cell_neighbour(self, cell: Cell,
+    def get_cell_neighbour(self,
+                           cell: Cell,
                            direction: DirectionType) -> Optional[Cell]:
         """
         Get the cell's neighbour in the given direction
@@ -81,6 +87,7 @@ class MazeGrid:
             coordinate.x -= 1
         else:
             raise ValueError("Unknown enum value")
+        print(coordinate.__str__())
         return self.get_cell(coordinate)
 
     def get_cell(self, coordinate: Coordinate) -> Optional[Cell]:

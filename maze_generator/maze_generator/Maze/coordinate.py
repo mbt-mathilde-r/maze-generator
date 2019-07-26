@@ -12,6 +12,9 @@ class Coordinate:
         self.x = x
         self.y = y
 
+    def __str__(self):
+        print("x: " + self.x.__str__() + ", y: " + self.y.__str__())
+
     def is_valid(self, maxX: int, maxY: int) -> bool:
         return 0 <= self.x < maxX \
                and 0 <= self.y < maxY

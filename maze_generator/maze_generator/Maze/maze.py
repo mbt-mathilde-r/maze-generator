@@ -31,6 +31,7 @@ class Maze:
 
     def __init__(self, width: int, height: int):
         self._grid = MazeGrid(width, height)
+        self.build_maze()
 
     # --------------------------------------------------------------------------
     # Create Maze
