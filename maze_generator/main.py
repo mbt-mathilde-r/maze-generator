@@ -6,12 +6,12 @@ from maze_generator.displayer.displayer import Displayer
 class MainMazeGenerator:
 
     # --------------------------------------------------------------------------
-    # Initializatio
+    # Initialization
     # --------------------------------------------------------------------------
 
     def __init__(self):
         print("Todo")
 
     if __name__ == '__main__':
-        maze = Maze(5, 5)
-        Displayer.display(maze, DisplayType.ASCII)
+        maze = Maze(90, 15, step_by_step=True)
+        maze.display(DisplayType.ASCII)

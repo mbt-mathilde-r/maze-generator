@@ -2,7 +2,6 @@ from maze_generator.Maze.cell import Cell
 from maze_generator.Maze.coordinate import Coordinate
 from maze_generator.Maze.direction_type import DirectionType
 from maze_generator.Maze.neighbour import Neighbour
-from numpy import ndarray
 from typing import Optional
 from random import Random
 
@@ -46,6 +45,10 @@ class MazeGrid:
             maze.append(maze_line)
         return maze
 
+    # --------------------------------------------------------------------------
+    # Neighbour
+    # --------------------------------------------------------------------------
+
     def get_random_unvisited_neighbour(self, cell) -> Optional[Neighbour]:
         """
         Get a random unvisited neighbour cell or None if the cell as no
@@ -63,7 +66,6 @@ class MazeGrid:
         """
         unvisited_neighbours = []
         for direction in DirectionType.all():
-            print("direction " + direction.__str__())
             neighbour = self.get_cell_neighbour(cell, direction)
             if neighbour is not None:
                 if not neighbour.isVisited:
@@ -89,11 +91,9 @@ class MazeGrid:
             raise ValueError("Unknown enum value")
         return self.get_cell(coordinate)
 
-    def get_cell(self, coordinate: Coordinate) -> Optional[Cell]:
+    def get_cell(self, coordinate: Coordinate) -> Cell:
         """
         Get the cell at the given coordinate
         """
         if coordinate.is_valid(self._width, self._height):
             return self._grid[coordinate.y][coordinate.x]
-        else:
-            return None
