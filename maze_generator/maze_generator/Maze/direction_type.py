@@ -13,10 +13,6 @@ class DirectionType(Enum):
     EAST = 2
     WEST = 3
 
-    # --------------------------------------------------------------------------
-    # TODO POC
-    # --------------------------------------------------------------------------
-
     def __str__(self):
         if self == DirectionType.NORTH:
             return "NORTH"

@@ -1,3 +1,4 @@
+from maze_generator.Maze.MazeComplexity import MazeComplexity
 from maze_generator.Maze.cell import Cell
 from maze_generator.generator.maze_digger import MazeDigger
 from maze_generator.Maze.maze_grid import MazeGrid
@@ -38,7 +39,8 @@ class Maze:
         self.__build_maze()
 
     def __build_maze(self):
-        maze_digger = MazeDigger(step_action=self.step_display)
+        maze_digger = MazeDigger(complexity=MazeComplexity.LOW,
+                                 step_action=self.step_display)
         maze_digger.dig(grid=self._grid)
 
     # --------------------------------------------------------------------------

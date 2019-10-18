@@ -37,7 +37,6 @@ class MazeResolver:
         self._grid.change_visit_all(False)
         self.__set_path_on_grid(resolve_path)
 
-
     def __resolve_brutforce(self, start: Cell, end: Cell) -> [Cell]:
         start.isVisited = True
         self._step_action()

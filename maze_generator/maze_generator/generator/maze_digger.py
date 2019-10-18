@@ -14,7 +14,8 @@ class MazeDigger:
     # Initialization
     # --------------------------------------------------------------------------
 
-    def __init__(self, step_action=None):
+    def __init__(self,
+                 step_action=None):
         self._step_action = step_action
 
     # --------------------------------------------------------------------------
@@ -22,12 +23,14 @@ class MazeDigger:
     # --------------------------------------------------------------------------
     
     def dig(self, grid: MazeGrid):
-        self.__iterate_neighbour_opening_walls(grid, grid.get_cell(Coordinate(
-            0, 0)))
+        start_cell = grid.get_cell(Coordinate(0, 0))
+        self.__iterate_neighbour_opening_walls(grid, start_cell)
         self.__unvisit_all_cells(grid)
         self.__open_enter_and_exit_wall(grid)
 
-    def __iterate_neighbour_opening_walls(self, grid: MazeGrid, cell: Cell):
+    def __iterate_neighbour_opening_walls(self,
+                                          grid: MazeGrid,
+                                          cell: Cell):
         if cell is None:
             return
         cell.isVisited = True
