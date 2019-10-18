@@ -32,8 +32,8 @@ class Maze:
     # Initialize
     # --------------------------------------------------------------------------
 
-    def __init__(self, width: int, height: int, step_by_step: bool = False):
-        self._grid = MazeGrid(width, height)
+    def __init__(self, grid: MazeGrid, step_by_step: bool = False):
+        self._grid = grid
         self._step_by_step = step_by_step
         self.__build_maze()
 
