@@ -3,6 +3,7 @@ from maze_generator.Maze.maze_grid import MazeGrid
 from maze_generator.Maze.direction_type import DirectionType
 from maze_generator.displayer.display_type import DisplayType
 
+
 class Displayer:
 
     @staticmethod
@@ -18,46 +19,33 @@ class Displayer:
         rows = []
         header_row = ['╔']
         for x in range(width - 1):
-            header_row.append('═')
-            header_row.append(Displayer.__get_header_character(maze, x))
+            header_row.append(Displayer.__get_top_character(maze, x))
+            header_row.append(Displayer.__get_top_cross_character(maze, x))
         header_row.append("═╗")
 
         rows.append(''.join(header_row))
         for y in range(height):
-            row = ['║']
+            character = Displayer.__get_leading_character(maze, y)
+            row = [character]
             for x in range(width):
-                cell = maze.get_cell(Coordinate(x, y))
-                # Cell
-                if cell.isVisited:
-                    row.append("\033[92m░\033[0m")
-                else:
-                    row.append(" ")
-                # Wall
-                if cell.is_direction_open(DirectionType.EAST):
-                    row.append(' ')
-                else:
-                    row.append('║')
+                row.append(Displayer.__get_cell_character(maze, x, y))
+                row.append(Displayer.__get_next_east_wall_character(maze, x, y))
             rows.append(''.join(row))
 
-            row = ['║']
+            row = [Displayer.__get_leading_cross_character(maze, y)]
             for x in range(width):
-                coord = Coordinate(x, y)
-                cell = maze.get_cell(coord)
-                # Wall
-                if cell.is_direction_open(DirectionType.SOUTH):
-                    row.append(' ')
-                else:
-                    row.append('═')
-
-                character = Displayer.__get_cross_character(maze, coord)
-                row.append(character)
+                row.append(Displayer.__get_next_south_wall_character(maze,
+                                                                     x,
+                                                                     y))
+                row.append(Displayer.__get_cross_character(maze,
+                                                           Coordinate(x, y)))
 
             rows.append(''.join(row))
 
         footer_row = ['╚']
         for x in range(width - 1):
-            footer_row.append('═')
-            footer_row.append(Displayer.__get_footer_character(maze, x))
+            footer_row.append(Displayer.__get_bottom_character(maze, x))
+            footer_row.append(Displayer.__get_bottom_cross_character(maze, x))
         footer_row.append('═╝')
 
         row_length = len(rows)
@@ -66,8 +54,7 @@ class Displayer:
         print(result)
 
     @staticmethod
-    def __get_cross_character(grid: MazeGrid, coordinate: Coordinate)\
-                -> str:
+    def __get_cross_character(grid: MazeGrid, coordinate: Coordinate) -> str:
         me = grid.get_cell(coordinate)
         south = grid.get_cell_neighbour(me, DirectionType.SOUTH)
         east = grid.get_cell_neighbour(me, DirectionType.EAST)
@@ -80,38 +67,59 @@ class Displayer:
             if south is not None else False
         west_wall = not me.is_direction_open(DirectionType.SOUTH) \
             if me is not None else False
-        return Displayer.__walls_to_character(north_wall=north_wall,
-                                              south_wall=south_wall,
-                                              east_wall=east_wall,
-                                              west_wall=west_wall)
+        return Displayer.__cross_walls_to_character(north_wall=north_wall,
+                                                    south_wall=south_wall,
+                                                    east_wall=east_wall,
+                                                    west_wall=west_wall)
 
     @staticmethod
-    def __get_header_character(grid: MazeGrid, x: int) -> str:
+    def __get_cell_character(grid: MazeGrid, x: int, y: int) -> str:
+        me = grid.get_cell(Coordinate(x=x, y=y))
+        return "\033[92m░\033[0m" if me.isVisited else " "
+
+    @staticmethod
+    def __get_top_cross_character(grid: MazeGrid, x: int) -> str:
         me = grid.get_cell(Coordinate(x=x, y=0))
-
-        south_wall = not me.is_direction_open(DirectionType.EAST) \
-            if me is not None else False
-
-        return Displayer.__walls_to_character(north_wall=False,
-                                              south_wall=south_wall,
-                                              east_wall=True,
-                                              west_wall=True)
+        return "═" if me.is_direction_open(DirectionType.EAST) else "╦"
 
     @staticmethod
-    def __get_footer_character(grid: MazeGrid, x: int) -> str:
+    def __get_top_character(grid: MazeGrid, x: int) -> str:
+        me = grid.get_cell(Coordinate(x=x, y=0))
+        return " " if me.is_direction_open(DirectionType.NORTH) else "═"
+
+    @staticmethod
+    def __get_bottom_character(grid: MazeGrid, x: int) -> str:
         me = grid.get_cell(Coordinate(x=x, y=grid.height - 1))
-
-        north_wall = not me.is_direction_open(DirectionType.EAST) \
-            if me is not None else False
-
-        return Displayer.__walls_to_character(north_wall=north_wall,
-                                              south_wall=False,
-                                              east_wall=True,
-                                              west_wall=True)
+        return " " if me.is_direction_open(DirectionType.SOUTH) else "═"
 
     @staticmethod
-    def __walls_to_character(north_wall: bool, south_wall: bool, east_wall:
-    bool, west_wall: bool) -> str:
+    def __get_bottom_cross_character(grid: MazeGrid, x: int) -> str:
+        me = grid.get_cell(Coordinate(x=x, y=grid.height - 1))
+        return "═" if me.is_direction_open(DirectionType.EAST) else "╩"
+
+    @staticmethod
+    def __get_leading_cross_character(grid: MazeGrid, y: int) -> str:
+        me = grid.get_cell(Coordinate(x=0, y=y))
+        return '║' if me.is_direction_open(DirectionType.SOUTH) else '╠'
+
+    @staticmethod
+    def __get_leading_character(grid: MazeGrid, y: int) -> str:
+        me = grid.get_cell(Coordinate(x=0, y=y))
+        return ' ' if me.is_direction_open(DirectionType.WEST) else '║'
+
+    @staticmethod
+    def __get_next_east_wall_character(grid: MazeGrid, x: int, y: int) -> str:
+        me = grid.get_cell(Coordinate(x=x, y=y))
+        return ' ' if me.is_direction_open(DirectionType.EAST) else '║'
+
+    @staticmethod
+    def __get_next_south_wall_character(grid: MazeGrid, x: int, y: int) -> str:
+        me = grid.get_cell(Coordinate(x=x, y=y))
+        return ' ' if me.is_direction_open(DirectionType.SOUTH) else '═'
+
+    @staticmethod
+    def __cross_walls_to_character(north_wall: bool, south_wall: bool,
+                                   east_wall: bool, west_wall: bool) -> str:
         if north_wall and east_wall and south_wall and west_wall:
             return '╬'
         elif north_wall and east_wall and south_wall:
@@ -138,8 +146,4 @@ class Displayer:
             return '║'
         elif east_wall or west_wall:
             return '═'
-        return 'x'
-
-
-
-
+        return ' '
