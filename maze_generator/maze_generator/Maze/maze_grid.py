@@ -30,10 +30,10 @@ class MazeGrid:
     def __init__(self, width: int, height: int):
         self._width = width
         self._height = height
-        self._grid = self.create_grid()
+        self._grid = self.__create_grid()
         Random().seed()
 
-    def create_grid(self) -> [[Cell]]:
+    def __create_grid(self) -> [[Cell]]:
         """
         Create the grid for the future maze
         """
@@ -101,20 +101,6 @@ class MazeGrid:
         """
         if coordinate.is_valid(self._width, self._height):
             return self._grid[coordinate.y][coordinate.x]
-
-    def open_enter_wall(self):
-        coordinate = Coordinate(x=0, y=0)
-        cell = self.get_cell(coordinate)
-        open_direction = DirectionType.WEST
-
-        cell.open_wall(open_direction)
-
-    def open_exit_wall(self):
-        coordinate = Coordinate(x=self._width - 1, y=self._height - 1)
-        cell = self.get_cell(coordinate)
-        open_direction = DirectionType.EAST
-
-        cell.open_wall(open_direction)
 
     # --------------------------------------------------------------------------
     # Visit status

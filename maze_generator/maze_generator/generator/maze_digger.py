@@ -54,8 +54,20 @@ class MazeDigger:
         return True
 
     def __open_enter_and_exit_wall(self, grid: MazeGrid):
-        grid.open_enter_wall()
-        grid.open_exit_wall()
+        self.__open_enter_wall(grid)
+        self.__open_exit_wall(grid)
+
+    def __open_enter_wall(self, grid: MazeGrid):
+        cell = grid.get_cell(Coordinate(x=0, y=0))
+        open_direction = DirectionType.WEST
+
+        cell.open_wall(open_direction)
+
+    def __open_exit_wall(self, grid: MazeGrid):
+        cell = grid.get_cell(Coordinate(x=grid.width - 1, y=grid.height - 1))
+        open_direction = DirectionType.EAST
+
+        cell.open_wall(open_direction)
 
     def __unvisit_all_cells(self, grid: MazeGrid):
         grid.change_visit_all(is_visited=False)

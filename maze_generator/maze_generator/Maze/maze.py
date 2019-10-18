@@ -46,8 +46,9 @@ class Maze:
     # --------------------------------------------------------------------------
 
     def resolve(self):
-        maze_resolver = MazeResolver(step_action=self.step_display)
-        maze_resolver.resolve(self._grid)
+        maze_resolver = MazeResolver(grid=self._grid,
+                                     step_action=self.step_display)
+        maze_resolver.resolve()
 
     # --------------------------------------------------------------------------
     # Display
