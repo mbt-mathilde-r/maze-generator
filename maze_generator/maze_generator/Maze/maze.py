@@ -44,6 +44,8 @@ class Maze:
     def build_maze(self):
         self.iterate_neighbour_opening_walls(self._grid.get_cell(Coordinate(
             0, 0)))
+        self.unvisit_all_cells()
+        self.open_enter_and_exit_wall()
 
     def iterate_neighbour_opening_walls(self, cell: Cell):
         if cell is None:
@@ -75,10 +77,25 @@ class Maze:
             time.sleep(0.05)
         return True
 
+    def open_enter_and_exit_wall(self):
+        self._grid.open_enter_wall()
+        self._grid.open_exit_wall()
+
+    # --------------------------------------------------------------------------
+    # Display
+    # --------------------------------------------------------------------------
+
     def display(self, display_type: DisplayType):
         """
         Display the current maze
         :param display_type: type of display for the maze
         """
         Displayer.display(self._grid, display_type)
+
+    # --------------------------------------------------------------------------
+    # Tools
+    # --------------------------------------------------------------------------
+
+    def unvisit_all_cells(self):
+        self._grid.change_visit_all(is_visited=False)
 

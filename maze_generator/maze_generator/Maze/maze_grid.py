@@ -38,10 +38,10 @@ class MazeGrid:
         Create the grid for the future maze
         """
         maze = []
-        for y in range(self._height):
+        for line in range(self._height):
             maze_line = []
-            for x in range(self._width):
-                maze_line.append(Cell(Coordinate(x, y)))
+            for column in range(self._width):
+                maze_line.append(Cell(Coordinate(x=column, y=line)))
             maze.append(maze_line)
         return maze
 
@@ -49,7 +49,7 @@ class MazeGrid:
     # Neighbour
     # --------------------------------------------------------------------------
 
-    def get_random_unvisited_neighbour(self, cell) -> Optional[Neighbour]:
+    def get_random_unvisited_neighbour(self, cell: Cell) -> Optional[Neighbour]:
         """
         Get a random unvisited neighbour cell or None if the cell as no
         unvisited neighbour
@@ -91,9 +91,38 @@ class MazeGrid:
             raise ValueError("Unknown enum value")
         return self.get_cell(coordinate)
 
+    # --------------------------------------------------------------------------
+    # Cells
+    # --------------------------------------------------------------------------
+
     def get_cell(self, coordinate: Coordinate) -> Cell:
         """
         Get the cell at the given coordinate
         """
         if coordinate.is_valid(self._width, self._height):
             return self._grid[coordinate.y][coordinate.x]
+
+    def open_enter_wall(self):
+        coordinate = Coordinate(x=0, y=0)
+        cell = self.get_cell(coordinate)
+        open_direction = DirectionType.WEST
+
+        cell.open_wall(open_direction)
+
+    def open_exit_wall(self):
+        coordinate = Coordinate(x=self._width - 1, y=self._height - 1)
+        cell = self.get_cell(coordinate)
+        open_direction = DirectionType.EAST
+
+        cell.open_wall(open_direction)
+
+    # --------------------------------------------------------------------------
+    # Visit status
+    # --------------------------------------------------------------------------
+
+    def change_visit_all(self, is_visited: bool):
+        for line in range(len(self._grid)):
+            for column in range(len(self._grid[line])):
+                cell = self.get_cell(Coordinate(x=column, y=line))
+                cell.isVisited = is_visited
+
