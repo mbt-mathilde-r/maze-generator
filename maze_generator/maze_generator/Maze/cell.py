@@ -22,6 +22,9 @@ class Cell:
 
     def __init__(self, coordinate: Coordinate):
         self.isVisited = False
+        self.isStart = False
+        self.isEnd = False
+        self.isInvalid = False
         self.__coordinate = coordinate
         self.__walls = {
             DirectionType.NORTH: True,
@@ -42,3 +45,4 @@ class Cell:
 
     def is_direction_open(self, direction: DirectionType) -> bool:
         return not self.__walls[direction]
+

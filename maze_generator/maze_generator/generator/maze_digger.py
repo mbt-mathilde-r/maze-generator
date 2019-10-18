@@ -62,12 +62,14 @@ class MazeDigger:
         open_direction = DirectionType.WEST
 
         cell.open_wall(open_direction)
+        cell.isStart = True
 
     def __open_exit_wall(self, grid: MazeGrid):
         cell = grid.get_cell(Coordinate(x=grid.width - 1, y=grid.height - 1))
         open_direction = DirectionType.EAST
 
         cell.open_wall(open_direction)
+        cell.isEnd = True
 
     def __unvisit_all_cells(self, grid: MazeGrid):
         grid.change_visit_all(is_visited=False)

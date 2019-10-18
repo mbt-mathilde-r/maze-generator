@@ -102,6 +102,25 @@ class MazeGrid:
         if coordinate.is_valid(self._width, self._height):
             return self._grid[coordinate.y][coordinate.x]
 
+    def get_start_cell(self) -> Optional[Cell]:
+        """
+        Get the cell marked as start cell
+        """
+        return self.find_cell(MazeGrid.is_start_cell)
+
+    def get_end_cell(self) -> Optional[Cell]:
+        """
+        Get the cell marked as start cell
+        """
+        return self.find_cell(MazeGrid.is_end_cell)
+
+    def find_cell(self, condition):
+        for line in range(len(self._grid)):
+            for column in range(len(self._grid[line])):
+                cell = self.get_cell(Coordinate(x=column, y=line))
+                if condition(cell) is True:
+                    return cell
+
     # --------------------------------------------------------------------------
     # Visit status
     # --------------------------------------------------------------------------
@@ -112,3 +131,14 @@ class MazeGrid:
                 cell = self.get_cell(Coordinate(x=column, y=line))
                 cell.isVisited = is_visited
 
+    # --------------------------------------------------------------------------
+    # Cell Tools
+    # --------------------------------------------------------------------------
+
+    @staticmethod
+    def is_start_cell(cell: Cell):
+        return cell.isStart
+
+    @staticmethod
+    def is_end_cell(cell: Cell):
+        return cell.isEnd

@@ -75,7 +75,15 @@ class Displayer:
     @staticmethod
     def __get_cell_character(grid: MazeGrid, x: int, y: int) -> str:
         me = grid.get_cell(Coordinate(x=x, y=y))
-        return "\033[92m░\033[0m" if me.isVisited else " "
+        if me.isStart:
+            return "\033[92m░\033[0m"
+        if me.isEnd:
+            return "\033[95m░\033[0m"
+        if me.isInvalid:
+            return "\033[94m░\033[0m"
+        if me.isVisited:
+            return "\033[93m░\033[0m"
+        return " "
 
     @staticmethod
     def __get_top_cross_character(grid: MazeGrid, x: int) -> str:
