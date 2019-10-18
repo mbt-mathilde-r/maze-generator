@@ -1,8 +1,6 @@
 from maze_generator.Maze.cell import Cell
-from maze_generator.Maze.coordinate import Coordinate
+from maze_generator.Maze.maze_digger import MazeDigger
 from maze_generator.Maze.maze_grid import MazeGrid
-from maze_generator.Maze.direction_type import DirectionType
-# TEMP
 from maze_generator.displayer.display_type import DisplayType
 from maze_generator.displayer.displayer import Displayer
 import time
@@ -10,6 +8,7 @@ import time
 # ------------------------------------------------------------------------------
 # Representation of a maze grid with cells and walls
 # ------------------------------------------------------------------------------
+
 
 class Maze:
 
@@ -42,44 +41,8 @@ class Maze:
     # --------------------------------------------------------------------------
 
     def build_maze(self):
-        self.iterate_neighbour_opening_walls(self._grid.get_cell(Coordinate(
-            0, 0)))
-        self.unvisit_all_cells()
-        self.open_enter_and_exit_wall()
-
-    def iterate_neighbour_opening_walls(self, cell: Cell):
-        if cell is None:
-            return
-        cell.isVisited = True
-        neighbour = self._grid.get_random_unvisited_neighbour(cell)
-        if neighbour is None:
-            return
-        self.open_wall(cell, neighbour.direction)
-
-        self.iterate_neighbour_opening_walls(neighbour.cell)
-        self.iterate_neighbour_opening_walls(cell)
-
-    # --------------------------------------------------------------------------
-    # Maze walls
-    # --------------------------------------------------------------------------
-
-    def open_wall(self, cell: Cell, direction: DirectionType) -> bool:
-        """
-        Open a wall between two cells
-        """
-        neighbour = self._grid.get_cell_neighbour(cell, direction)
-        if neighbour is None:
-            return False
-        cell.open_wall(direction)
-        neighbour.open_wall(direction.opposite())
-        if self._step_by_step:
-            self.display(DisplayType.ASCII)
-            time.sleep(0.05)
-        return True
-
-    def open_enter_and_exit_wall(self):
-        self._grid.open_enter_wall()
-        self._grid.open_exit_wall()
+        maze_digger = MazeDigger()
+        maze_digger.dig(grid=self._grid)
 
     # --------------------------------------------------------------------------
     # Display
@@ -92,10 +55,7 @@ class Maze:
         """
         Displayer.display(self._grid, display_type)
 
-    # --------------------------------------------------------------------------
-    # Tools
-    # --------------------------------------------------------------------------
-
-    def unvisit_all_cells(self):
-        self._grid.change_visit_all(is_visited=False)
+    def step_display(self):
+        self.display(DisplayType.ASCII)
+        time.sleep(0.05)
 
