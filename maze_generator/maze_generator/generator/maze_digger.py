@@ -14,8 +14,8 @@ class MazeDigger:
     # Initialization
     # --------------------------------------------------------------------------
 
-    def __init__(self, step_display=None):
-        self._step_display = step_display
+    def __init__(self, step_action=None):
+        self._step_action = step_action
 
     # --------------------------------------------------------------------------
     # Create Maze
@@ -39,9 +39,7 @@ class MazeDigger:
         self.__iterate_neighbour_opening_walls(grid, neighbour.cell)
         self.__iterate_neighbour_opening_walls(grid, cell)
 
-    def __open_wall(self,
-                    grid: MazeGrid,
-                    cell: Cell,
+    def __open_wall(self, grid: MazeGrid, cell: Cell,
                     direction: DirectionType) -> bool:
         """
         Open a wall between two cells
@@ -51,8 +49,8 @@ class MazeDigger:
             return False
         cell.open_wall(direction)
         neighbour.open_wall(direction.opposite())
-        if self._step_display is not None:
-            self._step_display()
+        if self._step_action is not None:
+            self._step_action()
         return True
 
     def __open_enter_and_exit_wall(self, grid: MazeGrid):

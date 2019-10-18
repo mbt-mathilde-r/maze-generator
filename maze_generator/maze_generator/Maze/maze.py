@@ -1,5 +1,5 @@
 from maze_generator.Maze.cell import Cell
-from maze_generator.Maze.maze_digger import MazeDigger
+from maze_generator.generator.maze_digger import MazeDigger
 from maze_generator.Maze.maze_grid import MazeGrid
 from maze_generator.displayer.display_type import DisplayType
 from maze_generator.displayer.displayer import Displayer
