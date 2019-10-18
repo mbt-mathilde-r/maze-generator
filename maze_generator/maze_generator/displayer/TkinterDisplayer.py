@@ -22,6 +22,7 @@ class TkinterDisplayer:
 
         self.__draw_maze(self._canvas, maze)
         self._window.mainloop()
+        self._window.destroy()
 
     def __create_canvas(self, maze: MazeGrid) -> Canvas:
         width = maze.width * self._cell_width + self._window_padding
