@@ -15,3 +15,5 @@ class MainMazeGenerator:
     if __name__ == '__main__':
         maze = Maze(90, 15, step_by_step=True)
         maze.display(DisplayType.ASCII)
+        maze.resolve()
+

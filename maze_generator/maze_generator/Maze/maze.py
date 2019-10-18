@@ -8,6 +8,7 @@ import time
 # ------------------------------------------------------------------------------
 # Representation of a maze grid with cells and walls
 # ------------------------------------------------------------------------------
+from maze_generator.generator.maze_resolver import MazeResolver
 
 
 class Maze:
@@ -34,15 +35,19 @@ class Maze:
     def __init__(self, width: int, height: int, step_by_step: bool = False):
         self._grid = MazeGrid(width, height)
         self._step_by_step = step_by_step
-        self.build_maze()
+        self.__build_maze()
 
-    # --------------------------------------------------------------------------
-    # Create Maze
-    # --------------------------------------------------------------------------
-
-    def build_maze(self):
-        maze_digger = MazeDigger()
+    def __build_maze(self):
+        maze_digger = MazeDigger(step_action=self.step_display)
         maze_digger.dig(grid=self._grid)
+
+    # --------------------------------------------------------------------------
+    # Resolve
+    # --------------------------------------------------------------------------
+
+    def resolve(self):
+        maze_resolver = MazeResolver(step_action=self.step_display)
+        maze_resolver.resolve(self._grid)
 
     # --------------------------------------------------------------------------
     # Display
@@ -56,6 +61,6 @@ class Maze:
         Displayer.display(self._grid, display_type)
 
     def step_display(self):
-        self.display(DisplayType.ASCII)
-        time.sleep(0.05)
-
+        if self._step_by_step:
+            self.display(DisplayType.ASCII)
+            time.sleep(0.05)
