@@ -1,6 +1,6 @@
+#!/usr/local/bin/python3
 from maze_generator.Maze.maze import Maze
 from maze_generator.displayer.display_type import DisplayType
-from maze_generator.displayer.displayer import Displayer
 
 
 class MainMazeGenerator:
