@@ -9,3 +9,4 @@ class DisplayType(Enum):
 
     ASCII = 0
     SVG = 1
+    TKINTER = 2

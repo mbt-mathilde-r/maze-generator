@@ -14,9 +14,7 @@ class MainMazeGenerator:
         print("Todo")
 
     if __name__ == '__main__':
-        maze = Maze(MazeGrid(40, 20), step_by_step=False)
-        maze.display(DisplayType.ASCII)
-        maze._step_by_step = True
+        maze = Maze(MazeGrid(40, 40), step_by_step=False)
         maze.resolve()
-        maze.display(DisplayType.ASCII)
+        maze.display(DisplayType.TKINTER)
 
