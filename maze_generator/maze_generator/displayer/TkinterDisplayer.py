@@ -13,16 +13,18 @@ class TkinterDisplayer:
         self._cell_width = 20
         self._cell_height = 20
         self._canvas = None
+        self._window = None
 
+    def start(self, completion):
         self._window = Tk()
+        self._window.after(0, completion)
+        self._window.mainloop()
 
     def display(self, maze: MazeGrid):
         if self._canvas is None:
             self._canvas = self.__create_canvas(maze)
 
         self.__draw_maze(self._canvas, maze)
-        self._window.mainloop()
-        self._window.destroy()
 
     def __create_canvas(self, maze: MazeGrid) -> Canvas:
         width = maze.width * self._cell_width + self._window_padding
@@ -36,6 +38,7 @@ class TkinterDisplayer:
         height = maze.height
         width = maze.width
 
+        canvas.delete(ALL)
         for y in range(0, height):
             for x in range(0, width):
                 self.draw_cell(canvas, maze.get_cell(Coordinate(x=x, y=y)))

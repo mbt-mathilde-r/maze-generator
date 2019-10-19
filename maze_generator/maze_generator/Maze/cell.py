@@ -1,6 +1,5 @@
 from maze_generator.Maze.direction_type import DirectionType
 from maze_generator.Maze.coordinate import Coordinate
-import numpy as np
 
 
 class Cell:

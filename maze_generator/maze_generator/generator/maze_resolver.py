@@ -24,7 +24,6 @@ class MazeResolver:
     # --------------------------------------------------------------------------
 
     def resolve(self):
-        print("Start resolve")
         start_cell = self._grid.get_start_cell()
         end_cell = self._grid.get_end_cell()
 

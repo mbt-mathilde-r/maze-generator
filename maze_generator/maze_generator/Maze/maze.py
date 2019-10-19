@@ -63,5 +63,4 @@ class Maze:
 
     def step_display(self):
         if self._step_by_step:
-            self.display(DisplayType.ASCII)
-            time.sleep(0.01)
+            self.display(DisplayType.TKINTER)
